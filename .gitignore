@@ -1,0 +1,12 @@
+# Local tools and operating-system files
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+
+# Never publish local credentials or environment files.
+.env
+.env.*
+*.pem
+*.key
