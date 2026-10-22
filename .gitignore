@@ -4,6 +4,7 @@ node_modules/
 Thumbs.db
 *.log
 .vscode/
+.netlify/
 
 # Never publish local credentials or environment files.
 .env

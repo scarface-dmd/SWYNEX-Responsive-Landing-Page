@@ -9,12 +9,12 @@ These notes explain this specific implementation. They do not describe or invent
 - `script.js` opens and closes the mobile menu and expands the three learning-path cards. It does not connect to a server or create accounts.
 - `assets/favicon.svg` is the small SkillSpring bar-mark icon used in the browser tab.
 - `assets/screenshots/` contains saved desktop and mobile views for review. These images are not loaded by the landing page.
-- `README.md` describes the project, testing, local setup, limitations, AI assistance, and GitHub Pages publishing.
+- `README.md` describes the project, testing, local setup, limitations, the Netlify deployment, and the GitHub Pages backup.
 - `.gitignore` keeps local editor folders, log files, and optional tool dependencies out of Git.
 
 ## How the HTML Is Organised
 
-The header contains a wordmark, menu button, and navigation. The `main` contains the hero, learning paths, benefits, process, FAQ, and final CTA. The footer contains working navigation, attribution, and the student-demo disclosure.
+The header contains a wordmark, menu button, and navigation. The `main` contains the hero, learning paths, benefits, process, FAQ, and final CTA. The footer contains three readable paragraphs: the student-project credit, internship task attribution, and demo availability statement. It does not offer accounts or enrolment.
 
 There is one `h1` for the main headline. The content sections use `h2`, cards use `h3`, and expanded course outlines use `h4`. Section IDs such as `paths` and `faq` match links such as `href="#paths"`.
 
@@ -117,7 +117,7 @@ The FAQ uses native HTML `details` and `summary`, which already provide expandab
 
 ### 4. What makes the page work on GitHub Pages without a build step?
 
-It is plain HTML, CSS, JavaScript, and local SVG. Asset paths start with `./` rather than an absolute domain or root path. GitHub Pages can serve these files directly from the repository root.
+It is plain HTML, CSS, JavaScript, and local SVG. Asset paths start with `./` rather than an absolute domain or root path. GitHub Pages can serve these files directly from the repository root. Netlify also serves the same four runtime files without compilation; its upload excludes the documentation, screenshots, and Git files. Netlify updates are manual, while GitHub Pages updates from `main`.
 
 ### 5. What is real on this page, and what is only illustrative?
 

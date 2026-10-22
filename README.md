@@ -2,9 +2,11 @@
 
 A warm, project-focused landing page for a fictional student learning platform. Created by Afkar Riswar for **SWYNEX Frontend Developer Internship - Task 1**, with AI assistance.
 
-**Live Demo:** [Open SkillSpring](https://scarface-dmd.github.io/SWYNEX-Responsive-Landing-Page/)
+**Live Demo:** [Open SkillSpring on Netlify](https://skillspring-afkar-riswar.netlify.app/)
 
 **Public Repository:** [scarface-dmd/SWYNEX-Responsive-Landing-Page](https://github.com/scarface-dmd/SWYNEX-Responsive-Landing-Page)
+
+**GitHub Pages Backup:** https://scarface-dmd.github.io/SWYNEX-Responsive-Landing-Page/
 
 This is a student demonstration, not a real learning service. SkillSpring is not owned, affiliated with, or endorsed by SWYNEX. There is no backend, database, enrolment, payment, account creation, or personal-data collection.
 
@@ -31,7 +33,7 @@ This implementation uses semantic HTML5, CSS3, and vanilla JavaScript. It has no
 - [Desktop, 1440px](assets/screenshots/desktop-1440.png)
 - [Mobile, 390px](assets/screenshots/mobile-390.png)
 
-Both captures show the updated layout, with the dashboard badge below the learning checklist.
+Both captures show the Netlify deployment, including the simplified three-line student-project footer. Netlify adds its own Free-plan branding badge.
 
 ## File Structure
 
@@ -52,7 +54,7 @@ Both captures show the updated layout, with the dashboard badge below the learni
 
 ## Run Locally
 
-Open `index.html` directly in a modern browser, or use a static server. A server is recommended to mirror GitHub Pages:
+Open `index.html` directly in a modern browser, or use a static server. A server is recommended to mirror static hosting:
 
 ```powershell
 # Run from the project folder.
@@ -86,11 +88,11 @@ Visit **http://127.0.0.1:4173/**. Stop the server with `Ctrl+C`. If Python is un
 
 ## Testing Results
 
-Local browser checks used Python's static server, a repository-subdirectory preview, and installed Google Chrome controlled through Playwright. Test tools run outside the project; they are not site dependencies. The layout fix was checked at all five widths below. The focus-ring fix received a separate keyboard/contrast check.
+Local browser checks used Python's static server and installed Google Chrome controlled through Playwright. The Netlify production site was also tested directly in a fresh browser session without authentication at all five widths below. Earlier repository-subdirectory and contrast investigations are recorded separately. Test tools run outside the project; they are not site dependencies.
 
 | Check | Actual result |
 | --- | --- |
-| Viewports: 360, 390, 768, 1024, 1440px, each 900px high | Passed DOM/layout and interaction checks at all five widths |
+| Viewports: 360, 390, 768, 1024, 1440px, each 900px high | Local and live Netlify DOM/layout and interaction checks passed at all five widths |
 | Horizontal overflow and layout | None detected at all five widths, including expanded cards; screenshots visually reviewed; badge no longer overlaps checklist text |
 | Internal links | All fragment targets exist; no empty or bare `#` links |
 | Mobile menu at 360/390px | Opens; closes via toggle, section selection, and Escape; expanded state updates |
@@ -98,19 +100,21 @@ Local browser checks used Python's static server, a repository-subdirectory prev
 | Mobile/desktop resize | Menu state resets across the 600px breakpoint |
 | Course cards | All three open and close at each width; hidden/expanded states stay in sync |
 | FAQ | All four toggle using Enter on a focused summary at each width |
-| Keyboard navigation | First Tab reaches the skip link; 19 mobile and 23 desktop tab stops have nonempty labels and visible 3px outlines; mobile keyboard opening, link entry, and Escape focus return passed |
+| Keyboard navigation | Live Netlify skip-link/focus checks passed; local tab-order audit verified 14 mobile and 18 desktop tab stops with nonempty labels and visible 3px outlines; mobile keyboard opening, link entry, and Escape focus return passed |
 | Sticky-header offset | Mobile benefits destination appears below the header |
 | Reduced motion | Computed scroll behavior becomes `auto` |
 | Local asset loading | Favicon served successfully; no failed browser resource requests |
 | Browser console and page errors | None observed during the checks |
 | JavaScript syntax | `node --check script.js` passed |
-| Screenshots | Full-page captures visually reviewed at all five widths; 1440px desktop and 390px mobile captures retained in the project |
-| axe-core WCAG 2.0/2.1 A/AA scan | No automated violations at 390px and 1440px; contrast background-sampling results remain incomplete for some decorative regions; calculated colour checks supplement them below |
-| Repository subdirectory | The same browser checks passed under a local `/SWYNEX-Responsive-Landing-Page/` prefix; all three runtime asset paths match filename case exactly |
-| Navigation and CTAs | All 16 internal links were clicked at 390px and 1440px; destinations were visible; card buttons also worked with Space and Enter |
-| Published site and files | Anonymous HTTPS requests succeeded; published HTML, CSS, JavaScript, favicon, and both screenshots matched their tested local files byte for byte |
+| Screenshots | Updated full-page Netlify captures at all five widths; 1440px desktop and 390px mobile captures retained in the repository |
+| axe-core WCAG 2.0/2.1 A/AA scan | No automated violations locally or on Netlify at 390px and 1440px; background-sampling results remain incomplete for some decorative regions and the host-managed branding badge |
+| Repository subdirectory | Previously verified under a local `/SWYNEX-Responsive-Landing-Page/` prefix; runtime asset paths remain relative and unchanged |
+| Navigation and CTAs | All 11 current internal links were clicked on live Netlify at 390px and 1440px; destinations were visible; card buttons also worked with Space and Enter |
+| Footer | Exact requested three paragraphs verified locally and on Netlify at all five widths; text sizes are 16px, 14px, and 13px, with wrapping and no horizontal overflow |
+| Published Netlify files | Anonymous HTTPS requests succeeded; CSS, JavaScript, and favicon matched local files byte for byte; HTML matched after accounting for Netlify's hosting comment and badge script |
+| Upload scope | Only four runtime files were packaged; `.git/config`, `.env`, README, learning notes, screenshots, dependency files, and Netlify's internal config URL returned 404 on Netlify |
 | Public repository | Accessible over HTTPS without authentication |
-| Direct live-browser testing | Automated Chrome still returns `ERR_CONNECTION_RESET` for the live host before loading the page, while anonymous curl HTTPS requests succeed; local and live checks are not treated as equivalent |
+| Direct live-browser testing | Netlify passed direct Chrome testing; the previously observed GitHub Pages `ERR_CONNECTION_RESET` is not treated as a project code defect |
 
 ### Contrast Investigation
 
@@ -131,18 +135,29 @@ axe-core reports that pseudo-elements prevent it from determining some dashboard
 
 ### Known Limitations
 
-- Direct interactive testing of the public site in automated Chrome remains unavailable in this environment. The same browser can load a control HTTPS site, and curl can download the published site and assets with certificate verification enabled. This is a client/host transport-dependent failure, not a reproduced HTML, CSS, or JavaScript defect; its underlying network cause is unconfirmed. No browser security or TLS verification controls were disabled.
-- Public HTTPS downloads and local browser interaction tests are separate evidence, not a claim of a successful live-browser session.
+- GitHub Pages previously returned `ERR_CONNECTION_RESET` in automated Chrome and was reported inaccessible in the user's browser, despite successful HTTPS downloads. Its underlying transport cause is unconfirmed. The primary Netlify URL has passed both anonymous HTTPS and direct browser checks; no browser security or TLS verification controls were disabled.
+- Netlify adds a host-managed branding badge and hosting markup on the Free plan. These were retained; no paid plan, domain, or add-on was purchased. The application's own assets remain local.
 - Automated contrast background sampling remains incomplete as described above. Explicit colour calculations do not constitute full accessibility certification.
 - Physical-device, screen-reader, Safari, Firefox, and 200% browser-zoom testing have not been performed.
 - The dashboard and course outlines are illustrative. There are no real accounts, delivered courses, or enrolments.
 
-## GitHub Pages Deployment
+## Netlify Deployment
+
+- Production URL: https://skillspring-afkar-riswar.netlify.app/
+- Project: **skillspring-afkar-riswar**, on the **Free** plan; automatic top-ups are disabled.
+- Deployment used the official Netlify CLI with `--prod --no-build` and a separate publish folder containing only `index.html`, `styles.css`, `script.js`, and `assets/favicon.svg`.
+- Production is public over HTTPS; non-production previews remain behind Netlify team login. Team visibility defaults were not changed.
+- Documentation, Git metadata, screenshots, local tools, and credentials were excluded from the upload. Netlify's internal deployment configuration is not publicly served.
+
+This is a manual static deployment, not a Git-connected Netlify build. A push to GitHub does not automatically update Netlify. For future Netlify updates, upload a folder containing the same four runtime files through this existing project's **Deploys** page, or use the official CLI with `--prod --no-build` and project ID `02612f8f-d99b-4a94-9754-2bc4fcf40f06`. No compilation or backend is required.
+
+## GitHub Pages Backup
 
 - Public repository: [scarface-dmd/SWYNEX-Responsive-Landing-Page](https://github.com/scarface-dmd/SWYNEX-Responsive-Landing-Page).
 - Publishing source: **Deploy from a branch**, **main**, **/ (root)**.
 - Entry point: `index.html` at the repository root; HTTPS is enforced.
 - GitHub automatically rebuilds and deploys updates pushed to `main`. Deployment status appears in the repository's **Actions** tab; configuration is under **Settings > Pages**.
+- The original repository and GitHub Pages deployment remain in place.
 
 Relative stylesheet, script, and favicon paths support the repository subdirectory. No custom domain, secrets, environment variables, or local build command are required.
 
