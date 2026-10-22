@@ -26,6 +26,13 @@ This implementation uses semantic HTML5, CSS3, and vanilla JavaScript. It has no
 - Clear fictional-demo disclosures and the required creator attribution.
 - Local SVG favicon and desktop/mobile review screenshots.
 
+## Screenshots
+
+- [Desktop, 1440px](assets/screenshots/desktop-1440.png)
+- [Mobile, 390px](assets/screenshots/mobile-390.png)
+
+Both captures show the updated layout, with the dashboard badge below the learning checklist.
+
 ## File Structure
 
 ```text
@@ -48,7 +55,7 @@ This implementation uses semantic HTML5, CSS3, and vanilla JavaScript. It has no
 Open `index.html` directly in a modern browser, or use a static server. A server is recommended to mirror GitHub Pages:
 
 ```powershell
-# Run from this project folder, not your user-profile folder.
+# Run from the project folder.
 python -m http.server 4173 --bind 127.0.0.1
 ```
 
@@ -73,83 +80,72 @@ Visit **http://127.0.0.1:4173/**. Stop the server with `Ctrl+C`. If Python is un
 - Native `details` and `summary` provide FAQ keyboard behavior without extra JavaScript.
 - Hidden course outlines use the `hidden` attribute, so collapsed content is not exposed as visible content.
 - The dashboard has one descriptive accessible image label. Its decorative inner content and icons are hidden from assistive technology.
-- Dark text on warm light surfaces, visible 3px focus outlines, and generously padded controls support legibility and keyboard use.
+- Dark text on warm light surfaces, visible 3px focus outlines, and generously padded controls support legibility and keyboard use. The dark final CTA uses a light focus outline for contrast.
 - `scroll-padding-top` keeps anchor destinations below the sticky header. `prefers-reduced-motion` disables smooth scrolling and transitions.
 - Without JavaScript, section navigation stays visible and native FAQs still work. The custom collapsible menu and path-card expansion require JavaScript.
 
 ## Testing Results
 
-Tests were run locally using Python's static server and headless installed Google Chrome controlled through Playwright. Testing tools were installed outside the project, not as runtime dependencies.
+Local browser checks used Python's static server, a repository-subdirectory preview, and installed Google Chrome controlled through Playwright. Test tools run outside the project; they are not site dependencies. The layout fix was checked at all five widths below. The focus-ring fix received a separate keyboard/contrast check.
 
 | Check | Actual result |
 | --- | --- |
 | Viewports: 360, 390, 768, 1024, 1440px, each 900px high | Passed DOM/layout and interaction checks at all five widths |
-| Horizontal overflow | None detected at all five widths, including expanded cards |
+| Horizontal overflow and layout | None detected at all five widths, including expanded cards; screenshots visually reviewed; badge no longer overlaps checklist text |
 | Internal links | All fragment targets exist; no empty or bare `#` links |
 | Mobile menu at 360/390px | Opens; closes via toggle, section selection, and Escape; expanded state updates |
 | Escape focus behavior | Focus returns to the menu toggle |
 | Mobile/desktop resize | Menu state resets across the 600px breakpoint |
 | Course cards | All three open and close at each width; hidden/expanded states stay in sync |
 | FAQ | All four toggle using Enter on a focused summary at each width |
-| Keyboard entry | First Tab reaches the skip link; 3px solid focus indicator verified |
+| Keyboard navigation | First Tab reaches the skip link; 19 mobile and 23 desktop tab stops have nonempty labels and visible 3px outlines; mobile keyboard opening, link entry, and Escape focus return passed |
 | Sticky-header offset | Mobile benefits destination appears below the header |
 | Reduced motion | Computed scroll behavior becomes `auto` |
 | Local asset loading | Favicon served successfully; no failed browser resource requests |
 | Browser console and page errors | None observed during the checks |
 | JavaScript syntax | `node --check script.js` passed |
 | Screenshots | Full-page captures visually reviewed at all five widths; 1440px desktop and 390px mobile captures retained in the project |
-| axe-core WCAG 2.0/2.1 A/AA scan | No automated violations at 390px and 1440px; one contrast-check category remained inconclusive and requires manual review, mainly around the decorative rotated illustration |
+| axe-core WCAG 2.0/2.1 A/AA scan | No automated violations at 390px and 1440px; contrast background-sampling results remain incomplete for some decorative regions; calculated colour checks supplement them below |
 | Repository subdirectory | The same browser checks passed under a local `/SWYNEX-Responsive-Landing-Page/` prefix; all three runtime asset paths match filename case exactly |
 | Navigation and CTAs | All 16 internal links were clicked at 390px and 1440px; destinations were visible; card buttons also worked with Space and Enter |
 | Published site and files | Anonymous HTTPS requests succeeded; published HTML, CSS, JavaScript, favicon, and both screenshots matched their tested local files byte for byte |
 | Public repository | Accessible over HTTPS without authentication |
-| Direct live-browser testing | Attempted, but automated Chrome HTTPS navigation returned `ERR_CONNECTION_RESET` in this environment; interaction checks were run against the local repository-subdirectory preview instead |
+| Direct live-browser testing | Automated Chrome still returns `ERR_CONNECTION_RESET` for the live host before loading the page, while anonymous curl HTTPS requests succeed; local and live checks are not treated as equivalent |
 
-Automated checks are not a claim of complete accessibility or universal browser support. The inconclusive contrast results are not counted as passing checks. No physical mobile device, screen reader, Safari, or Firefox testing has been performed.
+### Contrast Investigation
 
-### Manual Review Checklist
+Computed foreground/background colours were inspected and WCAG relative-luminance contrast ratios calculated at all five widths, including expanded course outlines and FAQ answers. Meaningful text inside the decorative dashboard was included; decorative symbols were excluded. All inspected text pairs met their applicable AA text thresholds. Representative normal-text results:
 
-- Open the page in your preferred desktop and phone browsers.
-- Use Tab and Shift+Tab through navigation, CTAs, card buttons, FAQ summaries, and footer links.
-- At mobile widths, open the menu, close it with its button and Escape, and follow each section link.
-- Expand every course and FAQ. Check that text is readable and nothing overlaps.
-- Test at 200% zoom and with your operating system's reduced-motion setting enabled.
-- Check with a screen reader if available; verify landmark names, image description, and expanded states.
-- After publishing, repeat the main checks on the actual GitHub Pages URL, especially asset loading.
+| Text | Foreground | Background | Contrast |
+| --- | --- | --- | --- |
+| Dashboard path title | `#ffffff` | `#216247` | 7.235:1 |
+| Dashboard current-path label | `#dbe8d4` | `#216247` | 5.686:1 |
+| Dashboard micro-labels | `#6a7568` | `#fffefa` | 4.776:1 |
+| Dashboard project metadata | `#596764` | `#fffefa` | 5.864:1 |
+| Dashboard checklist | `#63705f` | `#fffefa` | 5.185:1 |
+| Illustration caption, lowest measured pair | `#6b7569` | `#f8f8f2` | 4.504:1 |
+
+The final CTA's previous brown focus ring measured only 1.914:1 on its dark green background. Its new light ring (`#eef0df` on `#184c38`) measures 8.529:1. All inspected keyboard focus outlines exceeded 3:1 against their surrounding surfaces.
+
+axe-core reports that pseudo-elements prevent it from determining some dashboard backgrounds, and that decoration overlaps some final-CTA text. The dashboard's solid surfaces were checked explicitly. Calculations also account for the CTA flower's low-opacity white overlay; the lowest sampled CTA text ratio with that overlay is 5.921:1. Incomplete automated checks are not relabelled as automated passes.
+
+### Known Limitations
+
+- Direct interactive testing of the public site in automated Chrome remains unavailable in this environment. The same browser can load a control HTTPS site, and curl can download the published site and assets with certificate verification enabled. This is a client/host transport-dependent failure, not a reproduced HTML, CSS, or JavaScript defect; its underlying network cause is unconfirmed. No browser security or TLS verification controls were disabled.
+- Public HTTPS downloads and local browser interaction tests are separate evidence, not a claim of a successful live-browser session.
+- Automated contrast background sampling remains incomplete as described above. Explicit colour calculations do not constitute full accessibility certification.
+- Physical-device, screen-reader, Safari, Firefox, and 200% browser-zoom testing have not been performed.
+- The dashboard and course outlines are illustrative. There are no real accounts, delivered courses, or enrolments.
 
 ## GitHub Pages Deployment
 
-Published under the personal GitHub account **scarface-dmd**, with explicit user authorization. The first Pages build and deployment succeeded, and the live demo URL above was obtained from GitHub's Pages API and verified over public HTTPS. Nothing has been posted on LinkedIn or submitted to the internship form.
-
-- Repository visibility: **Public**.
+- Public repository: [scarface-dmd/SWYNEX-Responsive-Landing-Page](https://github.com/scarface-dmd/SWYNEX-Responsive-Landing-Page).
 - Publishing source: **Deploy from a branch**, **main**, **/ (root)**.
-- Entry point: `index.html` at the repository root.
-- HTTPS: enforced by GitHub Pages.
-- The repository website field points to the verified live demo.
-- The project has its own local Git repository. No files or history from the unrelated parent repository were published.
+- Entry point: `index.html` at the repository root; HTTPS is enforced.
+- GitHub automatically rebuilds and deploys updates pushed to `main`. Deployment status appears in the repository's **Actions** tab; configuration is under **Settings > Pages**.
 
-GitHub manages the Pages build and deployment. Relative stylesheet, script, and favicon paths allow the site to work under the repository subpath. No custom domain, secrets, environment variables, or local build command are required.
+Relative stylesheet, script, and favicon paths support the repository subdirectory. No custom domain, secrets, environment variables, or local build command are required.
 
-### Update the Published Site
+## Assets and License
 
-1. Edit and test files in the project folder, then inspect `git status` and `git diff`.
-2. Stage only the intended changed files, commit, and push to `main`. For example, after editing the README:
-
-```powershell
-git add README.md
-git commit -m "Update project documentation"
-git push origin main
-```
-
-3. Open the repository's **Actions** tab and wait for **pages build and deployment** to finish. Refresh the live demo and verify the changed content. GitHub/CDN updates can take a little time.
-4. To inspect or restore the publishing configuration, go to **Settings > Pages** and select **Deploy from a branch**, **main**, and **/ (root)**, then save if needed.
-
-For a separate copy in your own GitHub account, create a public repository, place these files at its root, and enable the same branch/root settings. Use the actual URL shown by GitHub rather than assuming a domain.
-
-For SWYNEX's **Task submission link**, use the public repository URL at the top of this README. The live demo is also linked there for review.
-
-## Authorship and AI Assistance
-
-This project was prepared for Afkar Riswar with AI assistance from OpenAI's coding assistant through OpenCode. The assistant generated the initial design, HTML/CSS/JavaScript, documentation, and browser-check scripts, and ran automated checks in the supplied workspace. This is not presented as independently authored work. Afkar should review, understand, personalise where appropriate, and follow the internship's AI-assistance disclosure rules before submission.
-
-All illustration and icon assets are included locally; no stock photos, testimonials, customer counts, or partner endorsements are used. No third-party asset library is required. No license has been selected; review your intended licensing before adding a license file.
+The HTML/CSS dashboard, inline SVG icons, favicon, and screenshots are included in this repository. No stock photos or third-party asset library are used. No `LICENSE` file is included; an open-source license has not been selected.

@@ -514,9 +514,12 @@ h1 .serif-accent {
   display: flex;
   align-items: center;
   gap: 10px;
-  position: absolute;
+  /* Keep the badge in flow so it cannot cover dashboard learning steps. */
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  margin: 24px 0 0 auto;
   right: -24px;
-  bottom: 21px;
   padding: 14px 18px;
   border-radius: 9px;
   background: #fffefa;
@@ -910,6 +913,9 @@ h1 .serif-accent {
 .button-light:hover {
   background: white;
 }
+.final-cta a:focus-visible {
+  outline-color: #eef0df;
+}
 .cta-flower {
   position: absolute;
   right: -34px;
@@ -1272,7 +1278,6 @@ h1 .serif-accent {
   .floating-note {
     padding: 10px 13px;
     right: -9px;
-    bottom: 16px;
   }
   .floating-note strong {
     font-size: 11px;
