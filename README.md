@@ -2,6 +2,10 @@
 
 A warm, project-focused landing page for a fictional student learning platform. Created by Afkar Riswar for **SWYNEX Frontend Developer Internship - Task 1**, with AI assistance.
 
+**Live Demo:** [Open SkillSpring](https://scarface-dmd.github.io/SWYNEX-Responsive-Landing-Page/)
+
+**Public Repository:** [scarface-dmd/SWYNEX-Responsive-Landing-Page](https://github.com/scarface-dmd/SWYNEX-Responsive-Landing-Page)
+
 This is a student demonstration, not a real learning service. SkillSpring is not owned, affiliated with, or endorsed by SWYNEX. There is no backend, database, enrolment, payment, account creation, or personal-data collection.
 
 ## Task Requirements
@@ -95,6 +99,11 @@ Tests were run locally using Python's static server and headless installed Googl
 | JavaScript syntax | `node --check script.js` passed |
 | Screenshots | Full-page captures visually reviewed at all five widths; 1440px desktop and 390px mobile captures retained in the project |
 | axe-core WCAG 2.0/2.1 A/AA scan | No automated violations at 390px and 1440px; one contrast-check category remained inconclusive and requires manual review, mainly around the decorative rotated illustration |
+| Repository subdirectory | The same browser checks passed under a local `/SWYNEX-Responsive-Landing-Page/` prefix; all three runtime asset paths match filename case exactly |
+| Navigation and CTAs | All 16 internal links were clicked at 390px and 1440px; destinations were visible; card buttons also worked with Space and Enter |
+| Published site and files | Anonymous HTTPS requests succeeded; published HTML, CSS, JavaScript, favicon, and both screenshots matched their tested local files byte for byte |
+| Public repository | Accessible over HTTPS without authentication |
+| Direct live-browser testing | Attempted, but automated Chrome HTTPS navigation returned `ERR_CONNECTION_RESET` in this environment; interaction checks were run against the local repository-subdirectory preview instead |
 
 Automated checks are not a claim of complete accessibility or universal browser support. The inconclusive contrast results are not counted as passing checks. No physical mobile device, screen reader, Safari, or Firefox testing has been performed.
 
@@ -108,37 +117,36 @@ Automated checks are not a claim of complete accessibility or universal browser 
 - Check with a screen reader if available; verify landmark names, image description, and expanded states.
 - After publishing, repeat the main checks on the actual GitHub Pages URL, especially asset loading.
 
-## Publish to GitHub Pages
+## GitHub Pages Deployment
 
-Nothing has been published or submitted automatically.
+Published under the personal GitHub account **scarface-dmd**, with explicit user authorization. The first Pages build and deployment succeeded, and the live demo URL above was obtained from GitHub's Pages API and verified over public HTTPS. Nothing has been posted on LinkedIn or submitted to the internship form.
 
-**Important:** The workspace initially inherited an unrelated Git repository from `C:\Users\Hp`. Create a project-local repository below before staging files. Do not run these commands from `C:\Users\Hp` or stage that parent repository.
+- Repository visibility: **Public**.
+- Publishing source: **Deploy from a branch**, **main**, **/ (root)**.
+- Entry point: `index.html` at the repository root.
+- HTTPS: enforced by GitHub Pages.
+- The repository website field points to the verified live demo.
+- The project has its own local Git repository. No files or history from the unrelated parent repository were published.
 
-1. Sign in to GitHub and create a **public**, empty repository named **SWYNEX-Responsive-Landing-Page**. Do not initialize it with a README, license, or `.gitignore`; those project files are already local where applicable.
-2. Open a terminal in the folder containing this `index.html`. Initialize the separate project-local repository and commit the reviewed project:
+GitHub manages the Pages build and deployment. Relative stylesheet, script, and favicon paths allow the site to work under the repository subpath. No custom domain, secrets, environment variables, or local build command are required.
 
-```powershell
-git init -b main
-git rev-parse --show-toplevel
-# Confirm the output is THIS project folder before continuing.
-git add index.html styles.css script.js assets README.md LEARNING-NOTES.md .gitignore
-git status
-git commit -m "Build SkillSpring responsive landing page"
-```
+### Update the Published Site
 
-3. Add your repository remote and push. The prompt below asks for your actual GitHub username:
+1. Edit and test files in the project folder, then inspect `git status` and `git diff`.
+2. Stage only the intended changed files, commit, and push to `main`. For example, after editing the README:
 
 ```powershell
-$GitHubUsername = Read-Host "Enter your GitHub username"
-git remote add origin "https://github.com/$GitHubUsername/SWYNEX-Responsive-Landing-Page.git"
-git push -u origin main
+git add README.md
+git commit -m "Update project documentation"
+git push origin main
 ```
 
-4. In the GitHub repository, go to **Settings > Pages**. Under **Build and deployment**, choose **Deploy from a branch**, select **main** and **/ (root)**, then select **Save**.
-5. Wait for the Pages deployment to finish. The expected website address is `https://YOUR-USERNAME.github.io/SWYNEX-Responsive-Landing-Page/`, with your actual username substituted. Open the URL shown by GitHub and run the manual checklist.
-6. Review the repository and site yourself. The internship repository submission URL is `https://github.com/YOUR-USERNAME/SWYNEX-Responsive-Landing-Page`, not just the live-site URL.
+3. Open the repository's **Actions** tab and wait for **pages build and deployment** to finish. Refresh the live demo and verify the changed content. GitHub/CDN updates can take a little time.
+4. To inspect or restore the publishing configuration, go to **Settings > Pages** and select **Deploy from a branch**, **main**, and **/ (root)**, then save if needed.
 
-Relative stylesheet, script, and favicon paths allow the site to work under a GitHub Pages repository subpath. No custom domain, server configuration, secrets, or environment variables are required.
+For a separate copy in your own GitHub account, create a public repository, place these files at its root, and enable the same branch/root settings. Use the actual URL shown by GitHub rather than assuming a domain.
+
+For SWYNEX's **Task submission link**, use the public repository URL at the top of this README. The live demo is also linked there for review.
 
 ## Authorship and AI Assistance
 
